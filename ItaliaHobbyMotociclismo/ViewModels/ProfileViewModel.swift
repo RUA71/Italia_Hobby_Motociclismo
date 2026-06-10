@@ -29,8 +29,12 @@ final class ProfileViewModel: ObservableObject {
             self.user = updated
             userRepo.saveLocally(updated)
         } catch {
-            // Save locally even if network fails
+            // Save locally even if network fails, and inform the user
             userRepo.saveLocally(user)
+            errorMessage = NSLocalizedString(
+                "Modifiche salvate localmente. Saranno sincronizzate quando torni online.",
+                comment: "Offline profile save notice"
+            )
         }
         isEditing = false
     }

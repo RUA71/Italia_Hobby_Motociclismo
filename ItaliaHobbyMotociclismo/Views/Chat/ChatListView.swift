@@ -25,7 +25,7 @@ struct ChatListView: View {
                 }
             }
             .navigationTitle("Chat")
-            .task { await eventsVM.loadEvents() }
+            .task { await eventsVM.loadEvents(userId: authVM.currentUser?.id) }
         }
     }
 }

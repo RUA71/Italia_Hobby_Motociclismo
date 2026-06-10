@@ -63,10 +63,16 @@ final class AuthViewModel: ObservableObject {
             currentUser = registered
             isRegistered = true
         } catch {
-            // Fallback: save locally if network unavailable
+            // Persist locally so the user can continue offline;
+            // they'll be synced to the server when connectivity is restored.
             userRepo.saveLocally(user)
             currentUser = user
             isRegistered = true
+            // Inform the user that the remote registration failed.
+            errorMessage = NSLocalizedString(
+                "Registrazione salvata localmente. Sarà sincronizzata quando torni online.",
+                comment: "Offline registration notice"
+            )
         }
     }
 

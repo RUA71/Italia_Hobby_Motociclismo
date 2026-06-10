@@ -85,7 +85,19 @@ struct ProfileView: View {
             } message: {
                 Text("Sei sicuro di voler uscire?")
             }
+            .alert("Avviso", isPresented: profileErrorBinding) {
+                Button("OK", role: .cancel) { profileVM.errorMessage = nil }
+            } message: {
+                Text(profileVM.errorMessage ?? "")
+            }
         }
+    }
+
+    private var profileErrorBinding: Binding<Bool> {
+        Binding(
+            get: { profileVM.errorMessage != nil },
+            set: { if !$0 { profileVM.errorMessage = nil } }
+        )
     }
 
     @ViewBuilder

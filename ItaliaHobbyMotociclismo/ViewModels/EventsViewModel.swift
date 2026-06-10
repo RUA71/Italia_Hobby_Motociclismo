@@ -12,7 +12,7 @@ final class EventsViewModel: ObservableObject {
 
     // MARK: - Load Events
 
-    func loadEvents() async {
+    func loadEvents(userId: String? = nil) async {
         // Show cached data immediately
         events = eventRepo.cachedEvents()
         isLoading = true
@@ -20,7 +20,7 @@ final class EventsViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            events = try await eventRepo.fetchEvents()
+            events = try await eventRepo.fetchEvents(userId: userId)
         } catch {
             errorMessage = error.localizedDescription
         }

@@ -19,15 +19,27 @@ try {
     ]);
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['error' => 'Database connection failed']);
+    echo json_encode(['data' => null, 'error' => 'Database connection failed']);
     exit;
 }
 
 // ---- Helpers ----
+
+/**
+ * All responses — success and error — share the same envelope:
+ * { "data": <payload|null>, "error": <message|null> }
+ */
 function jsonResponse(mixed $data, int $status = 200): never {
     http_response_code($status);
     header('Content-Type: application/json; charset=utf-8');
-    echo json_encode(['data' => $data]);
+    echo json_encode(['data' => $data, 'error' => null]);
+    exit;
+}
+
+function jsonError(string $message, int $status = 400): never {
+    http_response_code($status);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['data' => null, 'error' => $message]);
     exit;
 }
 
@@ -38,10 +50,20 @@ function getBody(): array {
 function requireParams(array $body, array $keys): void {
     foreach ($keys as $key) {
         if (empty($body[$key])) {
-            http_response_code(400);
-            echo json_encode(['error' => "Missing required field: $key"]);
-            exit;
+            jsonError("Missing required field: $key");
         }
+    }
+}
+
+/**
+ * Verifies that the given user_id is subscribed to the given event_id.
+ * Terminates with 403 if not subscribed.
+ */
+function requireSubscription(PDO $pdo, string $userId, string $eventId): void {
+    $check = $pdo->prepare('SELECT 1 FROM subscriptions WHERE user_id = ? AND event_id = ?');
+    $check->execute([$userId, $eventId]);
+    if (!$check->fetch()) {
+        jsonError('Not subscribed to this event', 403);
     }
 }
 
@@ -98,20 +120,14 @@ if ($method === 'POST' && $path === '/events/unsubscribe') {
     jsonResponse(['unsubscribed' => true]);
 }
 
-// GET /events/{id}/chat
+// GET /events/{id}/chat  — user_id is required to verify subscription
 if ($method === 'GET' && preg_match('#^/events/([^/]+)/chat$#', $path, $m)) {
     $eventId = $m[1];
-    // Verify subscription
-    $userId = $_GET['user_id'] ?? null;
-    if ($userId) {
-        $check = $pdo->prepare('SELECT 1 FROM subscriptions WHERE user_id = ? AND event_id = ?');
-        $check->execute([$userId, $eventId]);
-        if (!$check->fetch()) {
-            http_response_code(403);
-            echo json_encode(['error' => 'Not subscribed to this event']);
-            exit;
-        }
+    $userId  = $_GET['user_id'] ?? null;
+    if (!$userId) {
+        jsonError('user_id is required', 400);
     }
+    requireSubscription($pdo, $userId, $eventId);
     $stmt = $pdo->prepare(
         'SELECT m.*, u.nickname AS sender_nickname
          FROM messages m
@@ -123,11 +139,12 @@ if ($method === 'GET' && preg_match('#^/events/([^/]+)/chat$#', $path, $m)) {
     jsonResponse($stmt->fetchAll());
 }
 
-// POST /events/{id}/chat
+// POST /events/{id}/chat  — verify subscription before posting
 if ($method === 'POST' && preg_match('#^/events/([^/]+)/chat$#', $path, $m)) {
     $eventId = $m[1];
-    $body = getBody();
+    $body    = getBody();
     requireParams($body, ['user_id', 'text']);
+    requireSubscription($pdo, $body['user_id'], $eventId);
     $id = bin2hex(random_bytes(16));
     $stmt = $pdo->prepare(
         'INSERT INTO messages (id, event_id, sender_id, text, timestamp)
@@ -183,13 +200,10 @@ if ($method === 'GET' && preg_match('#^/user/([^/]+)$#', $path, $m)) {
     $stmt->execute([$m[1]]);
     $user = $stmt->fetch();
     if (!$user) {
-        http_response_code(404);
-        echo json_encode(['error' => 'User not found']);
-        exit;
+        jsonError('User not found', 404);
     }
     jsonResponse($user);
 }
 
 // Fallback
-http_response_code(404);
-echo json_encode(['error' => 'Endpoint not found']);
+jsonError('Endpoint not found', 404);

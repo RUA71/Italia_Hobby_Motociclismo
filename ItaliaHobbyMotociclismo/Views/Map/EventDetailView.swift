@@ -6,7 +6,9 @@ struct EventDetailView: View {
     @EnvironmentObject var eventsVM: EventsViewModel
     @EnvironmentObject var authVM: AuthViewModel
 
-    /// The event may change as subscription state updates, so we bind via ID.
+    /// The event is looked up from the view model by ID each render cycle
+    /// so that subscription state updates (from subscribe/unsubscribe calls) are
+    /// automatically reflected without needing a separate binding.
     var eventId: String
     @Environment(\.dismiss) private var dismiss
 

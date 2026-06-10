@@ -33,28 +33,40 @@ enum NetworkError: LocalizedError {
 enum APIEndpoint {
     static let baseURL = "https://api.italiahobbymotociclismo.it"
 
-    case getEvents
+    case getEvents(userId: String?)
     case subscribeEvent
     case unsubscribeEvent
-    case getChat(eventId: String)
+    case getChat(eventId: String, userId: String)
     case postMessage(eventId: String)
     case registerUser
     case getUser(userId: String)
 
     var path: String {
         switch self {
-        case .getEvents:              return "/events"
-        case .subscribeEvent:         return "/events/subscribe"
-        case .unsubscribeEvent:       return "/events/unsubscribe"
-        case .getChat(let id):        return "/events/\(id)/chat"
-        case .postMessage(let id):    return "/events/\(id)/chat"
-        case .registerUser:           return "/user/register"
-        case .getUser(let id):        return "/user/\(id)"
+        case .getEvents:                  return "/events"
+        case .subscribeEvent:             return "/events/subscribe"
+        case .unsubscribeEvent:           return "/events/unsubscribe"
+        case .getChat(let id, _):         return "/events/\(id)/chat"
+        case .postMessage(let id):        return "/events/\(id)/chat"
+        case .registerUser:               return "/user/register"
+        case .getUser(let id):            return "/user/\(id)"
         }
     }
 
+    /// Returns the full URL including any required query parameters.
     var url: URL? {
-        URL(string: APIEndpoint.baseURL + path)
+        var components = URLComponents(string: APIEndpoint.baseURL + path)
+        switch self {
+        case .getEvents(let userId):
+            if let userId {
+                components?.queryItems = [URLQueryItem(name: "user_id", value: userId)]
+            }
+        case .getChat(_, let userId):
+            components?.queryItems = [URLQueryItem(name: "user_id", value: userId)]
+        default:
+            break
+        }
+        return components?.url
     }
 
     var httpMethod: String {

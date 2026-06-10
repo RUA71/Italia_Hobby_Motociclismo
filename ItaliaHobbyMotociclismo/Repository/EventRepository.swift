@@ -11,8 +11,8 @@ final class EventRepository {
     // MARK: - Fetch Events
 
     /// Returns cached events immediately, then fetches remote and updates local DB.
-    func fetchEvents() async throws -> [Event] {
-        let remote: [Event] = try await api.request(endpoint: .getEvents)
+    func fetchEvents(userId: String? = nil) async throws -> [Event] {
+        let remote: [Event] = try await api.request(endpoint: .getEvents(userId: userId))
         db.saveEvents(remote)
         return remote
     }

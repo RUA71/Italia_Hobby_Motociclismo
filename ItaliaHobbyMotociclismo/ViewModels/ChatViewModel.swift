@@ -12,6 +12,7 @@ final class ChatViewModel: ObservableObject {
     let event: Event
     private var pollingTask: Task<Void, Never>?
     private let chatRepo = ChatRepository.shared
+    private var currentUserId: String?
 
     // MARK: - Init
 
@@ -26,7 +27,8 @@ final class ChatViewModel: ObservableObject {
 
     // MARK: - Load / Poll
 
-    func startPolling() {
+    func startPolling(userId: String) {
+        currentUserId = userId
         pollingTask?.cancel()
         pollingTask = Task { [weak self] in
             while !Task.isCancelled {
@@ -41,8 +43,9 @@ final class ChatViewModel: ObservableObject {
     }
 
     func fetchMessages() async {
+        guard let userId = currentUserId else { return }
         do {
-            messages = try await chatRepo.fetchMessages(for: event.id)
+            messages = try await chatRepo.fetchMessages(for: event.id, userId: userId)
         } catch {
             errorMessage = error.localizedDescription
         }

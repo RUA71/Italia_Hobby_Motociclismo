@@ -11,8 +11,8 @@ final class ChatRepository {
     // MARK: - Fetch Messages
 
     /// Fetches remote messages, merges into local DB, returns combined list.
-    func fetchMessages(for eventId: String) async throws -> [Message] {
-        let remote: [Message] = try await api.request(endpoint: .getChat(eventId: eventId))
+    func fetchMessages(for eventId: String, userId: String) async throws -> [Message] {
+        let remote: [Message] = try await api.request(endpoint: .getChat(eventId: eventId, userId: userId))
         db.saveMessages(remote)
         return db.fetchMessages(for: eventId)
     }

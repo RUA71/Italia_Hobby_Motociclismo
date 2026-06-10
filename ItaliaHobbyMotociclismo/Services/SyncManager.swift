@@ -35,9 +35,9 @@ final class SyncManager {
     private func performSync() async {
         guard let userId = userRepo.currentUserId else { return }
 
-        // Sync events
+        // Sync events (with subscription state for this user)
         do {
-            _ = try await eventRepo.fetchEvents()
+            _ = try await eventRepo.fetchEvents(userId: userId)
         } catch {
             print("SyncManager: events sync failed – \(error.localizedDescription)")
         }
@@ -46,12 +46,10 @@ final class SyncManager {
         let subscribedEvents = CoreDataManager.shared.fetchEvents().filter { $0.isSubscribed }
         for event in subscribedEvents {
             do {
-                _ = try await chatRepo.fetchMessages(for: event.id)
+                _ = try await chatRepo.fetchMessages(for: event.id, userId: userId)
             } catch {
                 print("SyncManager: chat sync failed for event \(event.id) – \(error.localizedDescription)")
             }
         }
-
-        _ = userId // Used for future per-user sync filtering
     }
 }

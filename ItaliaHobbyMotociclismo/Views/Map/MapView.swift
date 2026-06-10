@@ -33,7 +33,7 @@ struct MapView: View {
                     }
                 }
             }
-            .task { await eventsVM.loadEvents() }
+            .task { await eventsVM.loadEvents(userId: authVM.currentUser?.id) }
             .sheet(item: $selectedEvent) { event in
                 EventDetailView(event: event)
                     .environmentObject(eventsVM)

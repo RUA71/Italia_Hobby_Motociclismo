@@ -57,7 +57,7 @@ struct ChatRoomView: View {
         }
         .navigationTitle(chatVM.event.title)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { chatVM.startPolling() }
+        .onAppear { chatVM.startPolling(userId: authVM.currentUser?.id ?? "") }
         .onDisappear { chatVM.stopPolling() }
         .alert("Errore", isPresented: errorBinding) {
             Button("OK", role: .cancel) { chatVM.errorMessage = nil }
