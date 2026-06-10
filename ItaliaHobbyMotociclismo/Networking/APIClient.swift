@@ -104,7 +104,7 @@ final class APIClient {
 
     func request<T: Decodable>(
         endpoint: APIEndpoint,
-        body: (some Encodable)? = nil as EmptyBody?
+        body: (any Encodable)? = nil
     ) async throws -> T {
         guard let url = endpoint.url else {
             throw NetworkError.invalidURL
@@ -115,7 +115,7 @@ final class APIClient {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         if let body {
-            request.httpBody = try encoder.encode(body)
+            request.httpBody = try encoder.encode(AnyEncodable(body))
         }
 
         let (data, response) = try await session.data(for: request)
@@ -144,7 +144,7 @@ final class APIClient {
     /// Performs a request that expects no response body.
     func requestEmpty(
         endpoint: APIEndpoint,
-        body: (some Encodable)? = nil as EmptyBody?
+        body: (any Encodable)? = nil
     ) async throws {
         guard let url = endpoint.url else {
             throw NetworkError.invalidURL
@@ -155,7 +155,7 @@ final class APIClient {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         if let body {
-            request.httpBody = try encoder.encode(body)
+            request.httpBody = try encoder.encode(AnyEncodable(body))
         }
 
         let (data, response) = try await session.data(for: request)
@@ -176,5 +176,11 @@ final class APIClient {
     }
 }
 
-// Used as a default type parameter when no body is needed.
-private struct EmptyBody: Encodable {}
+// A small wrapper to encode an `any Encodable` existential value.
+private struct AnyEncodable: Encodable {
+    let value: any Encodable
+    init(_ value: any Encodable) { self.value = value }
+    func encode(to encoder: Encoder) throws {
+        try value.encode(to: encoder)
+    }
+}
