@@ -60,7 +60,7 @@
 		B022 /* ChatRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomView.swift; sourceTree = "<group>"; };
 		B023 /* TripsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsView.swift; sourceTree = "<group>"; };
 		B024 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		B025 /* ItaliaHobbyMotociclismo.xcdatamodeld */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ItaliaHobbyMotociclismo.xcdatamodeld; sourceTree = "<group>"; };
+		B028 /* ItaliaHobbyMotociclismo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ItaliaHobbyMotociclismo.xcdatamodel; sourceTree = "<group>"; };
 		B026 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B027 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		TARGET_REF /* ItaliaHobbyMotociclismo */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItaliaHobbyMotociclismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -330,6 +330,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin XCVersionGroup section */
+		B025 /* ItaliaHobbyMotociclismo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B028 /* ItaliaHobbyMotociclismo.xcdatamodel */,
+			);
+			currentVersion = B028 /* ItaliaHobbyMotociclismo.xcdatamodel */;
+			path = ItaliaHobbyMotociclismo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DEBUG_PROJ /* Debug */ = {
