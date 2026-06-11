@@ -17,9 +17,9 @@ enum NetworkError: LocalizedError {
         case .noData:
             return String(localized: "No data received from the server.")
         case .decodingFailed(let error):
-            return String(localized: "Decoding error: \(error.localizedDescription)")
+            return String(format: String(localized: "Decoding error: %@"), error.localizedDescription)
         case .serverError(let code, let msg):
-            return String(localized: "Server error (\(code)): \(msg ?? "unknown")")
+            return String(format: String(localized: "Server error (%lld): %@"), code, msg ?? String(localized: "unknown"))
         case .unauthorized:
             return String(localized: "Unauthorized access. Please log in.")
         case .unknown(let error):

@@ -81,3 +81,4 @@
 "Decoding error: %@" = "Decoding error: %@";
 "Server error (%lld): %@" = "Server error (%lld): %@";
 "Unauthorized access. Please log in." = "Unauthorized access. Please log in.";
+"unknown" = "unknown";
