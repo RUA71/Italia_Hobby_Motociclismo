@@ -24,7 +24,7 @@ struct MapView: View {
                 MapCompass()
                 MapScaleView()
             }
-            .navigationTitle("Mappa Eventi")
+            .navigationTitle("Events Map")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -39,7 +39,7 @@ struct MapView: View {
                     .environmentObject(eventsVM)
                     .environmentObject(authVM)
             }
-            .alert("Errore", isPresented: errorBinding) {
+            .alert("Error", isPresented: errorBinding) {
                 Button("OK", role: .cancel) { eventsVM.errorMessage = nil }
             } message: {
                 Text(eventsVM.errorMessage ?? "")

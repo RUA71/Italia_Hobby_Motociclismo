@@ -21,14 +21,14 @@ struct TripsView: View {
             Group {
                 if eventsVM.subscribedEvents.isEmpty {
                     ContentUnavailableView(
-                        "Nessuna uscita",
+                        "No Trips",
                         systemImage: "road.lanes",
-                        description: Text("Non sei ancora iscritto a nessun evento.")
+                        description: Text("You haven't joined any event yet.")
                     )
                 } else {
                     List {
                         if !upcomingTrips.isEmpty {
-                            Section("Prossime Uscite") {
+                            Section("Upcoming Trips") {
                                 ForEach(upcomingTrips) { event in
                                     TripRowView(event: event)
                                 }
@@ -36,7 +36,7 @@ struct TripsView: View {
                         }
 
                         if !pastTrips.isEmpty {
-                            Section("Storico") {
+                            Section("History") {
                                 ForEach(pastTrips) { event in
                                     TripRowView(event: event)
                                 }
@@ -45,7 +45,7 @@ struct TripsView: View {
                     }
                 }
             }
-            .navigationTitle("Le Mie Uscite")
+            .navigationTitle("My Trips")
             .task { await eventsVM.loadEvents() }
         }
     }

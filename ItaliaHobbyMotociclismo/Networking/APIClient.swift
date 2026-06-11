@@ -13,15 +13,15 @@ enum NetworkError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "L'URL della richiesta non è valido."
+            return String(localized: "The request URL is not valid.")
         case .noData:
-            return "Nessun dato ricevuto dal server."
+            return String(localized: "No data received from the server.")
         case .decodingFailed(let error):
-            return "Errore di decodifica: \(error.localizedDescription)"
+            return String(localized: "Decoding error: \(error.localizedDescription)")
         case .serverError(let code, let msg):
-            return "Errore del server (\(code)): \(msg ?? "sconosciuto")"
+            return String(localized: "Server error (\(code)): \(msg ?? "unknown")")
         case .unauthorized:
-            return "Accesso non autorizzato. Effettua il login."
+            return String(localized: "Unauthorized access. Please log in.")
         case .unknown(let error):
             return error.localizedDescription
         }
