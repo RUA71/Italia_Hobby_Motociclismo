@@ -16,19 +16,19 @@ struct RegistrationView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Dati Personali") {
+                Section("Personal Data") {
                     TextField("Nickname *", text: $nickname)
                         .autocorrectionDisabled()
-                    TextField("Nome", text: $name)
-                    TextField("Cognome", text: $surname)
-                    TextField("Città *", text: $city)
-                    TextField("Nazione *", text: $country)
+                    TextField("First Name", text: $name)
+                    TextField("Last Name", text: $surname)
+                    TextField("City *", text: $city)
+                    TextField("Country *", text: $country)
                 }
 
-                Section("Moto") {
-                    TextField("Marca *", text: $motorbikeBrand)
-                    TextField("Modello *", text: $motorbikeModel)
-                    TextField("Tipo", text: $motorbikeType)
+                Section("Motorcycle") {
+                    TextField("Brand *", text: $motorbikeBrand)
+                    TextField("Model *", text: $motorbikeModel)
+                    TextField("Type", text: $motorbikeType)
                 }
 
                 Section {
@@ -38,7 +38,7 @@ struct RegistrationView: View {
                             if authVM.isLoading {
                                 ProgressView()
                             } else {
-                                Text("Registrati")
+                                Text("Sign Up")
                                     .bold()
                             }
                             Spacer()
@@ -47,9 +47,9 @@ struct RegistrationView: View {
                     .disabled(!isFormValid || authVM.isLoading)
                 }
             }
-            .navigationTitle("Benvenuto!")
+            .navigationTitle("Welcome!")
             .navigationBarTitleDisplayMode(.large)
-            .alert("Errore", isPresented: errorBinding) {
+            .alert("Error", isPresented: errorBinding) {
                 Button("OK", role: .cancel) { authVM.errorMessage = nil }
             } message: {
                 Text(authVM.errorMessage ?? "")

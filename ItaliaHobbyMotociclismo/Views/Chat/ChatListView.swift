@@ -10,9 +10,9 @@ struct ChatListView: View {
             Group {
                 if eventsVM.subscribedEvents.isEmpty {
                     ContentUnavailableView(
-                        "Nessun evento",
+                        "No Events",
                         systemImage: "bubble.left.and.bubble.right",
-                        description: Text("Iscriviti a un evento per accedere alla chat.")
+                        description: Text("Subscribe to an event to access the chat.")
                     )
                 } else {
                     List(eventsVM.subscribedEvents) { event in

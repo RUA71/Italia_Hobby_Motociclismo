@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>it</string>
+	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>IHM</string>
 	<key>CFBundleExecutable</key>
@@ -22,8 +22,13 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>it</string>
+	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Usiamo la tua posizione per mostrarti gli eventi vicino a te sulla mappa.</string>
+	<string>We use your location to show you nearby events on the map.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
