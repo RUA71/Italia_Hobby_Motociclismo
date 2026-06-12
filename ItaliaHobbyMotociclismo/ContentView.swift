@@ -32,7 +32,7 @@ struct MainTabView: View {
         TabView {
             MapView()
                 .tabItem {
-                    Label("Mappa", systemImage: "map")
+                    Label("Events", systemImage: "calendar")
                 }
 
             ChatListView()
@@ -40,14 +40,9 @@ struct MainTabView: View {
                     Label("Chat", systemImage: "bubble.left.and.bubble.right")
                 }
 
-            TripsView()
+            SettingsMenuView(user: user)
                 .tabItem {
-                    Label("Uscite", systemImage: "road.lanes")
-                }
-
-            ProfileView(user: user)
-                .tabItem {
-                    Label("Profilo", systemImage: "person.circle")
+                    Label("Setting", systemImage: "gearshape")
                 }
         }
         .onAppear {
@@ -55,6 +50,64 @@ struct MainTabView: View {
         }
         .onDisappear {
             SyncManager.shared.stopSync()
+        }
+    }
+
+    /// Settings tab with profile, motorbike and privacy sub-menu.
+    private struct SettingsMenuView: View {
+        let user: User
+
+        var body: some View {
+            NavigationStack {
+                List {
+                    NavigationLink("User Profile") {
+                        ProfileView(user: user)
+                    }
+
+                    NavigationLink("Motorbikes") {
+                        MotorbikesView(user: user)
+                    }
+
+                    NavigationLink("Privacy") {
+                        PrivacyView()
+                    }
+                }
+                .navigationTitle("Setting")
+            }
+        }
+    }
+
+    private struct MotorbikesView: View {
+        let user: User
+
+        var body: some View {
+            Form {
+                infoRow(label: "Brand", value: user.motorbikeBrand)
+                infoRow(label: "Model", value: user.motorbikeModel)
+                infoRow(label: "Type", value: user.motorbikeType)
+            }
+            .navigationTitle("Motorbikes")
+        }
+
+        @ViewBuilder
+        private func infoRow(label: String, value: String) -> some View {
+            HStack {
+                Text(label)
+                    .foregroundColor(.secondary)
+                Spacer()
+                Text(value.isEmpty ? "—" : value)
+            }
+        }
+    }
+
+    private struct PrivacyView: View {
+        var body: some View {
+            ScrollView {
+                Text("Manage your privacy preferences and data visibility from this section.")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+            }
+            .navigationTitle("Privacy")
         }
     }
 }
