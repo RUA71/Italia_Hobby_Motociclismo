@@ -4,51 +4,72 @@ import SwiftUI
 struct RegistrationView: View {
     @EnvironmentObject var authVM: AuthViewModel
 
-    @State private var nickname      = ""
-    @State private var name          = ""
-    @State private var surname       = ""
-    @State private var city          = ""
-    @State private var country       = ""
+    @State private var nickname = ""
+    @State private var name = ""
+    @State private var surname = ""
+    @State private var city = ""
+    @State private var country = ""
     @State private var motorbikeBrand = ""
     @State private var motorbikeModel = ""
-    @State private var motorbikeType  = ""
+    @State private var motorbikeType = ""
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Personal Data") {
-                    TextField("Nickname *", text: $nickname)
-                        .autocorrectionDisabled()
-                    TextField("First Name", text: $name)
-                    TextField("Last Name", text: $surname)
-                    TextField("City *", text: $city)
-                    TextField("Country *", text: $country)
-                }
+            ZStack {
+                CrownBackground()
 
-                Section("Motorcycle") {
-                    TextField("Brand *", text: $motorbikeBrand)
-                    TextField("Model *", text: $motorbikeModel)
-                    TextField("Type", text: $motorbikeType)
-                }
+                ScrollView {
+                    VStack(spacing: 20) {
+                        CrownHeroBanner(
+                            title: "Welcome, Rider",
+                            subtitle: "A Defender of the Crown inspired hall for joining the club and preparing your next journey.",
+                            symbol: "crown.fill"
+                        )
 
-                Section {
-                    Button(action: register) {
-                        HStack {
-                            Spacer()
+                        CrownPanel {
+                            CrownSectionHeader(
+                                title: "Personal Data",
+                                subtitle: "Share the name you ride under and the land you call home."
+                            )
+
+                            textField("Nickname *", text: $nickname, disableAutocorrection: true)
+                            textField("First Name", text: $name)
+                            textField("Last Name", text: $surname)
+                            textField("City *", text: $city)
+                            textField("Country *", text: $country)
+                        }
+
+                        CrownPanel {
+                            CrownSectionHeader(
+                                title: "Motorcycle",
+                                subtitle: "Tell the club which steed will join the procession."
+                            )
+
+                            textField("Brand *", text: $motorbikeBrand)
+                            textField("Model *", text: $motorbikeModel)
+                            textField("Type", text: $motorbikeType)
+                        }
+
+                        Button(action: register) {
                             if authVM.isLoading {
                                 ProgressView()
+                                    .tint(CrownTheme.midnight)
+                                    .frame(maxWidth: .infinity)
                             } else {
-                                Text("Sign Up")
-                                    .bold()
+                                Text("Join the Court")
                             }
-                            Spacer()
                         }
+                        .buttonStyle(CrownPrimaryButtonStyle())
+                        .disabled(!isFormValid || authVM.isLoading)
+                        .opacity((!isFormValid || authVM.isLoading) ? 0.65 : 1)
                     }
-                    .disabled(!isFormValid || authVM.isLoading)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 24)
                 }
             }
-            .navigationTitle("Welcome!")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationTitle("Welcome")
+            .navigationBarTitleDisplayMode(.inline)
+            .crownNavigationChrome()
             .alert("Error", isPresented: errorBinding) {
                 Button("OK", role: .cancel) { authVM.errorMessage = nil }
             } message: {
@@ -57,7 +78,12 @@ struct RegistrationView: View {
         }
     }
 
-    // MARK: - Helpers
+    private func textField(_ title: String, text: Binding<String>, disableAutocorrection: Bool = false) -> some View {
+        TextField(title, text: text)
+            .textInputAutocapitalization(.words)
+            .autocorrectionDisabled(disableAutocorrection)
+            .crownTextField()
+    }
 
     private var isFormValid: Bool {
         !nickname.isEmpty && !city.isEmpty && !country.isEmpty &&
@@ -74,14 +100,14 @@ struct RegistrationView: View {
     private func register() {
         Task {
             await authVM.register(
-                nickname:       nickname,
-                name:           name,
-                surname:        surname,
-                city:           city,
-                country:        country,
+                nickname: nickname,
+                name: name,
+                surname: surname,
+                city: city,
+                country: country,
                 motorbikeBrand: motorbikeBrand,
                 motorbikeModel: motorbikeModel,
-                motorbikeType:  motorbikeType
+                motorbikeType: motorbikeType
             )
         }
     }

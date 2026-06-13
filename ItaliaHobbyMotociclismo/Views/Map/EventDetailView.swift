@@ -24,66 +24,63 @@ struct EventDetailView: View {
 
     var body: some View {
         NavigationStack {
-            Group {
-                if let event {
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 16) {
-                            // Mini map
-                            Map {
-                                Annotation(event.title, coordinate: event.coordinate) {
-                                    Image(systemName: "mappin.circle.fill")
-                                        .font(.title)
-                                        .foregroundColor(.red)
-                                }
-                            }
-                            .frame(height: 180)
-                            .cornerRadius(12)
-                            .padding(.horizontal)
+            ZStack {
+                CrownBackground()
 
-                            // Details
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(event.title)
-                                    .font(.title2.bold())
+                Group {
+                    if let event {
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 18) {
+                                CrownPanel(spacing: 14) {
+                                    CrownSectionHeader(
+                                        title: event.title,
+                                        subtitle: "Gather your companions and ride under the club banner."
+                                    )
 
-                                Label(
-                                    event.date.formatted(date: .long, time: .shortened),
-                                    systemImage: "calendar"
-                                )
-                                .foregroundColor(.secondary)
-
-                                Label(
-                                    String(format: String(localized: "%d participants"), event.participantCount),
-                                    systemImage: "person.3"
-                                )
-                                .foregroundColor(.secondary)
-
-                                Divider()
-
-                                Text(event.description)
-                                    .font(.body)
-                            }
-                            .padding(.horizontal)
-
-                            // Action buttons
-                            VStack(spacing: 12) {
-                                subscribeButton(event: event)
-
-                                if event.isSubscribed {
-                                    Button {
-                                        showChat = true
-                                    } label: {
-                                        Label("Open Chat", systemImage: "bubble.left.and.bubble.right")
-                                            .frame(maxWidth: .infinity)
+                                    Map {
+                                        Annotation(event.title, coordinate: event.coordinate) {
+                                            Image(systemName: "crown.fill")
+                                                .font(.title2)
+                                                .foregroundColor(CrownTheme.crimson)
+                                        }
                                     }
-                                    .buttonStyle(.bordered)
-                                    .tint(.blue)
+                                    .frame(height: 210)
+                                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                            .stroke(CrownTheme.gold.opacity(0.8), lineWidth: 2)
+                                    )
+                                }
+
+                                CrownPanel {
+                                    detailRow(systemImage: "calendar", value: event.date.formatted(date: .long, time: .shortened))
+                                    detailRow(systemImage: "person.3", value: String(format: String(localized: "%d participants"), event.participantCount))
+
+                                    Divider().background(CrownTheme.gold.opacity(0.35))
+
+                                    Text(event.description)
+                                        .foregroundStyle(CrownTheme.ink)
+                                }
+
+                                CrownPanel {
+                                    subscribeButton(event: event)
+
+                                    if event.isSubscribed {
+                                        Button {
+                                            showChat = true
+                                        } label: {
+                                            Label("Open Chat", systemImage: "bubble.left.and.bubble.right")
+                                        }
+                                        .buttonStyle(CrownSecondaryButtonStyle())
+                                    }
                                 }
                             }
-                            .padding()
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 24)
                         }
+                    } else {
+                        ContentUnavailableView("Event Not Found", systemImage: "magnifyingglass")
                     }
-                } else {
-                    ContentUnavailableView("Event Not Found", systemImage: "magnifyingglass")
                 }
             }
             .navigationTitle("Event Details")
@@ -91,6 +88,7 @@ struct EventDetailView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close") { dismiss() }
+                        .foregroundStyle(CrownTheme.gold)
                 }
             }
             .navigationDestination(isPresented: $showChat) {
@@ -99,6 +97,17 @@ struct EventDetailView: View {
                         .environmentObject(authVM)
                 }
             }
+            .crownNavigationChrome()
+        }
+    }
+
+    private func detailRow(systemImage: String, value: String) -> some View {
+        Label {
+            Text(value)
+                .foregroundStyle(CrownTheme.ink)
+        } icon: {
+            Image(systemName: systemImage)
+                .foregroundStyle(CrownTheme.crimson)
         }
     }
 
@@ -108,20 +117,16 @@ struct EventDetailView: View {
             Button(role: .destructive) {
                 Task { await unsubscribe(event: event) }
             } label: {
-                Label("Unsubscribe", systemImage: "minus.circle")
-                    .frame(maxWidth: .infinity)
+                Label("Withdraw from Ride", systemImage: "minus.circle")
             }
-            .buttonStyle(.bordered)
-            .tint(.red)
+            .buttonStyle(CrownSecondaryButtonStyle(foreground: CrownTheme.parchment, background: CrownTheme.crimson))
         } else {
             Button {
                 Task { await subscribe(event: event) }
             } label: {
-                Label("Subscribe", systemImage: "plus.circle")
-                    .frame(maxWidth: .infinity)
+                Label("Join the Ride", systemImage: "plus.circle")
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.green)
+            .buttonStyle(CrownPrimaryButtonStyle())
         }
     }
 
