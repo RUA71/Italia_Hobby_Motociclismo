@@ -12,41 +12,69 @@ struct ProfileView: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Personal Data") {
-                    if profileVM.isEditing {
-                        TextField("Nickname", text: $profileVM.user.nickname)
-                        TextField("First Name", text: $profileVM.user.name)
-                        TextField("Last Name", text: $profileVM.user.surname)
-                        TextField("City", text: $profileVM.user.city)
-                        TextField("Country", text: $profileVM.user.country)
-                    } else {
-                        infoRow(label: "Nickname", value: profileVM.user.nickname)
-                        infoRow(label: "First Name", value: profileVM.user.name)
-                        infoRow(label: "Last Name", value: profileVM.user.surname)
-                        infoRow(label: "City", value: profileVM.user.city)
-                        infoRow(label: "Country", value: profileVM.user.country)
+            ZStack {
+                CrownBackground()
+
+                ScrollView {
+                    VStack(spacing: 20) {
+                        CrownPanel {
+                            CrownSectionHeader(
+                                title: "Personal Data",
+                                subtitle: profileVM.isEditing ? "Update the details other riders will recognize." : "The rider information shown to the club."
+                            )
+
+                            if profileVM.isEditing {
+                                editableField("Nickname", text: $profileVM.user.nickname)
+                                editableField("First Name", text: $profileVM.user.name)
+                                editableField("Last Name", text: $profileVM.user.surname)
+                                editableField("City", text: $profileVM.user.city)
+                                editableField("Country", text: $profileVM.user.country)
+                            } else {
+                                infoRow(label: "Nickname", value: profileVM.user.nickname)
+                                infoRow(label: "First Name", value: profileVM.user.name)
+                                infoRow(label: "Last Name", value: profileVM.user.surname)
+                                infoRow(label: "City", value: profileVM.user.city)
+                                infoRow(label: "Country", value: profileVM.user.country)
+                            }
+                        }
+
+                        CrownPanel {
+                            CrownSectionHeader(
+                                title: "Your Motorcycle",
+                                subtitle: "Keep your bike details current for future rides."
+                            )
+
+                            if profileVM.isEditing {
+                                editableField("Brand", text: $profileVM.user.motorbikeBrand)
+                                editableField("Model", text: $profileVM.user.motorbikeModel)
+                                editableField("Type", text: $profileVM.user.motorbikeType)
+                            } else {
+                                infoRow(label: "Brand", value: profileVM.user.motorbikeBrand)
+                                infoRow(label: "Model", value: profileVM.user.motorbikeModel)
+                                infoRow(label: "Type", value: profileVM.user.motorbikeType)
+                            }
+                        }
+
+                        Button(role: .destructive) {
+                            showLogoutAlert = true
+                        } label: {
+                            Label("Logout", systemImage: "rectangle.portrait.and.arrow.right")
+                        }
+                        .buttonStyle(CrownSecondaryButtonStyle(foreground: CrownTheme.parchment, background: CrownTheme.crimson))
                     }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 24)
                 }
 
-                Section("Your Motorcycle") {
-                    if profileVM.isEditing {
-                        TextField("Brand", text: $profileVM.user.motorbikeBrand)
-                        TextField("Model", text: $profileVM.user.motorbikeModel)
-                        TextField("Type", text: $profileVM.user.motorbikeType)
-                    } else {
-                        infoRow(label: "Brand", value: profileVM.user.motorbikeBrand)
-                        infoRow(label: "Model", value: profileVM.user.motorbikeModel)
-                        infoRow(label: "Type", value: profileVM.user.motorbikeType)
+                if profileVM.isSaving {
+                    CrownPanel(alignment: .center, spacing: 12) {
+                        ProgressView("Saving…")
+                            .tint(CrownTheme.crimson)
+                        Text("Updating your rider record")
+                            .font(.system(.headline, design: .serif, weight: .bold))
+                            .foregroundStyle(CrownTheme.ink)
                     }
-                }
-
-                Section {
-                    Button(role: .destructive) {
-                        showLogoutAlert = true
-                    } label: {
-                        Label("Logout", systemImage: "rectangle.portrait.and.arrow.right")
-                    }
+                    .padding(.horizontal, 36)
                 }
             }
             .navigationTitle("Profile")
@@ -71,14 +99,6 @@ struct ProfileView: View {
                     }
                 }
             }
-            .overlay {
-                if profileVM.isSaving {
-                    ProgressView("Saving…")
-                        .padding()
-                        .background(.regularMaterial)
-                        .cornerRadius(12)
-                }
-            }
             .alert("Logout", isPresented: $showLogoutAlert) {
                 Button("Sign Out", role: .destructive) { authVM.logout() }
                 Button("Cancel", role: .cancel) {}
@@ -90,6 +110,7 @@ struct ProfileView: View {
             } message: {
                 Text(profileVM.errorMessage ?? "")
             }
+            .crownNavigationChrome()
         }
     }
 
@@ -100,13 +121,26 @@ struct ProfileView: View {
         )
     }
 
+    private func editableField(_ label: String, text: Binding<String>) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(label)
+                .font(.system(.subheadline, design: .serif, weight: .semibold))
+                .foregroundStyle(CrownTheme.ink.opacity(0.78))
+            TextField(label, text: text)
+                .textInputAutocapitalization(.words)
+                .crownTextField()
+        }
+    }
+
     @ViewBuilder
     private func infoRow(label: String, value: String) -> some View {
         HStack {
             Text(label)
-                .foregroundColor(.secondary)
+                .font(.system(.headline, design: .serif, weight: .semibold))
+                .foregroundStyle(CrownTheme.ink.opacity(0.8))
             Spacer()
             Text(value.isEmpty ? "—" : value)
+                .foregroundStyle(CrownTheme.ink)
         }
     }
 }

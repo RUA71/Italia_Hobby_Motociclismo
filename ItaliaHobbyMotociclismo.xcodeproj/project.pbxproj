@@ -34,6 +34,7 @@
 		A025 /* ItaliaHobbyMotociclismo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B025 /* ItaliaHobbyMotociclismo.xcdatamodeld */; };
 		A026 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B026 /* Assets.xcassets */; };
 		A027 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = LOCGROUP /* Localizable.strings */; };
+		A028 /* CrownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B029 /* CrownTheme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -166,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				B008 /* KeychainManager.swift */,
+				B029 /* CrownTheme.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -343,6 +345,7 @@
 				A023 /* TripsView.swift in Sources */,
 				A024 /* ProfileView.swift in Sources */,
 				A025 /* ItaliaHobbyMotociclismo.xcdatamodeld in Sources */,
+				A028 /* CrownTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
