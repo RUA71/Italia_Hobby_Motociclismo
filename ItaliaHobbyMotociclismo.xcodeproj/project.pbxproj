@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A001 /* ItaliaHobbyMotociclismoApp.swift in Sources */ = {
-		isa = PBXBuildFile; fileRef = B001 /* ItaliaHobbyMotociclismoApp.swift */; };
+		A001 /* ItaliaHobbyMotociclismoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B001 /* ItaliaHobbyMotociclismoApp.swift */; };
 		A002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B002 /* ContentView.swift */; };
 		A003 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B003 /* User.swift */; };
 		A004 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B004 /* Event.swift */; };
@@ -35,10 +34,11 @@
 		A025 /* ItaliaHobbyMotociclismo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B025 /* ItaliaHobbyMotociclismo.xcdatamodeld */; };
 		A026 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B026 /* Assets.xcassets */; };
 		A027 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = LOCGROUP /* Localizable.strings */; };
-		A028 /* CrownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B029 /* CrownTheme.swift */; };
+		A028 /* (null) in Sources */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65DF69852FDDA828004BFAAA /* CrownUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownUI.swift; sourceTree = "<group>"; };
 		B001 /* ItaliaHobbyMotociclismoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItaliaHobbyMotociclismoApp.swift; sourceTree = "<group>"; };
 		B002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B003 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		B028 /* ItaliaHobbyMotociclismo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ItaliaHobbyMotociclismo.xcdatamodel; sourceTree = "<group>"; };
 		ENSTRREF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ITSTRREF /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		TARGET_REF /* ItaliaHobbyMotociclismo */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItaliaHobbyMotociclismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		TARGET_REF /* ItaliaHobbyMotociclismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItaliaHobbyMotociclismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +133,7 @@
 			children = (
 				APPGROUP /* ItaliaHobbyMotociclismo */,
 				PRODUCTSGROUP /* Products */,
+				65DF69852FDDA828004BFAAA /* CrownUI.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -210,7 +211,6 @@
 			isa = PBXGroup;
 			children = (
 				B008 /* KeychainManager.swift */,
-				B029 /* CrownTheme.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -239,18 +239,6 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXVariantGroup section */
-		LOCGROUP /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ENSTRREF /* en */,
-				ITSTRREF /* it */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin PBXNativeTarget section */
 		NATIVE_TARGET /* ItaliaHobbyMotociclismo */ = {
@@ -346,11 +334,23 @@
 				A023 /* TripsView.swift in Sources */,
 				A024 /* ProfileView.swift in Sources */,
 				A025 /* ItaliaHobbyMotociclismo.xcdatamodeld in Sources */,
-				A028 /* CrownTheme.swift in Sources */,
+				A028 /* (null) in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		LOCGROUP /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ENSTRREF /* en */,
+				ITSTRREF /* it */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DEBUG_PROJ /* Debug */ = {
