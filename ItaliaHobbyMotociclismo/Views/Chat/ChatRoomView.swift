@@ -116,7 +116,7 @@ private struct MessageBubble: View {
 
                 Text(message.timestamp.formatted(date: .omitted, time: .shortened))
                     .font(.caption2)
-                    .foregroundColor(.white.opacity(0.7))
+                    .foregroundColor(CrownTheme.parchment.opacity(0.7))
             }
 
             if !isCurrentUser { Spacer(minLength: 40) }

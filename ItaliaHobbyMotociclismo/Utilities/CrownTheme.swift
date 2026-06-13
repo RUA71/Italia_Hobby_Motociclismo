@@ -10,6 +10,7 @@ enum CrownTheme {
     static let ink = Color(red: 61.0 / 255.0, green: 39.0 / 255.0, blue: 24.0 / 255.0)
     static let crimson = Color(red: 121.0 / 255.0, green: 27.0 / 255.0, blue: 35.0 / 255.0)
     static let emerald = Color(red: 67.0 / 255.0, green: 115.0 / 255.0, blue: 73.0 / 255.0)
+    static let shadow = Color.black.opacity(0.24)
 }
 
 struct CrownBackground: View {
@@ -97,7 +98,7 @@ struct CrownPanel<Content: View>: View {
                 .frame(width: 72, height: 4)
                 .padding(.top, 10)
         }
-        .shadow(color: .black.opacity(0.24), radius: 18, y: 10)
+        .shadow(color: CrownTheme.shadow, radius: 18, y: 10)
     }
 }
 
@@ -168,7 +169,7 @@ struct CrownPrimaryButtonStyle: ButtonStyle {
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
                     .stroke(CrownTheme.bronze, lineWidth: 2)
             )
-            .shadow(color: .black.opacity(0.18), radius: 10, y: 6)
+            .shadow(color: CrownTheme.shadow.opacity(0.75), radius: 10, y: 6)
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
             .opacity(configuration.isPressed ? 0.92 : 1)
     }

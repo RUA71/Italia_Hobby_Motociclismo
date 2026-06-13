@@ -31,7 +31,7 @@ struct MapView: View {
                 .padding(.horizontal, 16)
                 .padding(.top, 16)
                 .padding(.bottom, 120)
-                .shadow(color: .black.opacity(0.25), radius: 18, y: 10)
+                .shadow(color: CrownTheme.shadow, radius: 18, y: 10)
                 .mapControls {
                     MapUserLocationButton()
                     MapCompass()
