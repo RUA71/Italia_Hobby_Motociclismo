@@ -1,6 +1,31 @@
 {
   "images" : [
     {
+      "filename" : "IHM_logo_light.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "IHM_logo_dark.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "filename" : "IHM_logo_light.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
