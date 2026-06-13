@@ -3,6 +3,8 @@ import MapKit
 
 /// Displays all club events on a map with annotations.
 struct MapView: View {
+    private let bottomLedgerInset: CGFloat = 120
+
     @EnvironmentObject var eventsVM: EventsViewModel
     @EnvironmentObject var authVM: AuthViewModel
 
@@ -30,7 +32,7 @@ struct MapView: View {
                 )
                 .padding(.horizontal, 16)
                 .padding(.top, 16)
-                .padding(.bottom, 120)
+                .padding(.bottom, bottomLedgerInset)
                 .shadow(color: CrownTheme.shadow, radius: 18, y: 10)
                 .mapControls {
                     MapUserLocationButton()

@@ -2,6 +2,8 @@ import SwiftUI
 
 /// Private chat room for a specific event — only subscribed users can access this.
 struct ChatRoomView: View {
+    private let messageBubbleMinimumMargin: CGFloat = 40
+
     @EnvironmentObject var authVM: AuthViewModel
     @StateObject private var chatVM: ChatViewModel
 
@@ -20,7 +22,8 @@ struct ChatRoomView: View {
                             ForEach(chatVM.messages) { message in
                                 MessageBubble(
                                     message: message,
-                                    isCurrentUser: message.senderId == authVM.currentUser?.id
+                                    isCurrentUser: message.senderId == authVM.currentUser?.id,
+                                    minimumMargin: messageBubbleMinimumMargin
                                 )
                                 .id(message.id)
                             }
@@ -89,10 +92,11 @@ struct ChatRoomView: View {
 private struct MessageBubble: View {
     let message: Message
     let isCurrentUser: Bool
+    let minimumMargin: CGFloat
 
     var body: some View {
         HStack {
-            if isCurrentUser { Spacer(minLength: 40) }
+            if isCurrentUser { Spacer(minLength: minimumMargin) }
 
             VStack(alignment: isCurrentUser ? .trailing : .leading, spacing: 5) {
                 if !isCurrentUser {
@@ -119,7 +123,7 @@ private struct MessageBubble: View {
                     .foregroundColor(CrownTheme.parchment.opacity(0.7))
             }
 
-            if !isCurrentUser { Spacer(minLength: 40) }
+            if !isCurrentUser { Spacer(minLength: minimumMargin) }
         }
     }
 }
