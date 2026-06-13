@@ -1,0 +1,84 @@
+/* RegistrationView */
+"Personal Data" = "Dati Personali";
+"Nickname *" = "Nickname *";
+"First Name" = "Nome";
+"Last Name" = "Cognome";
+"City *" = "Città *";
+"Country *" = "Nazione *";
+"Motorcycle" = "Moto";
+"Brand *" = "Marca *";
+"Model *" = "Modello *";
+"Type" = "Tipo";
+"Sign Up" = "Registrati";
+"Welcome!" = "Benvenuto!";
+
+/* Common */
+"Error" = "Errore";
+"OK" = "OK";
+"Cancel" = "Annulla";
+
+/* ChatListView */
+"No Events" = "Nessun evento";
+"Subscribe to an event to access the chat." = "Iscriviti a un evento per accedere alla chat.";
+"Chat" = "Chat";
+
+/* ChatRoomView */
+"Write a message…" = "Scrivi un messaggio…";
+
+/* MapView */
+"Events Map" = "Mappa Eventi";
+
+/* EventDetailView */
+"%d participants" = "%d partecipanti";
+"Open Chat" = "Apri Chat";
+"Event Not Found" = "Evento non trovato";
+"Event Details" = "Dettaglio Evento";
+"Close" = "Chiudi";
+"Unsubscribe" = "Cancella iscrizione";
+"Subscribe" = "Iscriviti";
+
+/* ProfileView */
+"Personal Data" = "Dati Personali";
+"Nickname" = "Nickname";
+"First Name" = "Nome";
+"Last Name" = "Cognome";
+"City" = "Città";
+"Country" = "Nazione";
+"Your Motorcycle" = "La Tua Moto";
+"Brand" = "Marca";
+"Model" = "Modello";
+"Logout" = "Logout";
+"Profile" = "Profilo";
+"Save" = "Salva";
+"Edit" = "Modifica";
+"Saving…" = "Salvataggio…";
+"Sign Out" = "Esci";
+"Are you sure you want to sign out?" = "Sei sicuro di voler uscire?";
+"Warning" = "Avviso";
+
+/* TripsView */
+"No Trips" = "Nessuna uscita";
+"You haven't joined any event yet." = "Non sei ancora iscritto a nessun evento.";
+"Upcoming Trips" = "Prossime Uscite";
+"History" = "Storico";
+"My Trips" = "Le Mie Uscite";
+
+/* ContentView */
+"Loading…" = "Caricamento…";
+"Events" = "Eventi";
+"Settings" = "Impostazioni";
+"User Profile" = "Profilo Utente";
+"Motorbikes" = "Moto";
+"Privacy" = "Privacy";
+"Manage your privacy preferences and data visibility from this section." = "Gestisci le tue preferenze sulla privacy e la visibilità dei dati da questa sezione.";
+
+/* AuthViewModel */
+"Registration saved locally. It will be synced when you are back online." = "Registrazione salvata localmente. Sarà sincronizzata quando torni online.";
+
+/* NetworkError */
+"The request URL is not valid." = "L'URL della richiesta non è valido.";
+"No data received from the server." = "Nessun dato ricevuto dal server.";
+"Decoding error: %@" = "Errore di decodifica: %@";
+"Server error (%lld): %@" = "Errore del server (%lld): %@";
+"Unauthorized access. Please log in." = "Accesso non autorizzato. Effettua il login.";
+"unknown" = "sconosciuto";

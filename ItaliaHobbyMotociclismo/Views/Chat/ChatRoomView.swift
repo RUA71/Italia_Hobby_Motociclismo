@@ -37,7 +37,7 @@ struct ChatRoomView: View {
 
             // Message input
             HStack(spacing: 8) {
-                TextField("Scrivi un messaggio…", text: $chatVM.newMessageText, axis: .vertical)
+                TextField("Write a message…", text: $chatVM.newMessageText, axis: .vertical)
                     .textFieldStyle(.roundedBorder)
                     .lineLimit(1...4)
 
@@ -59,7 +59,7 @@ struct ChatRoomView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { chatVM.startPolling(userId: authVM.currentUser?.id ?? "") }
         .onDisappear { chatVM.stopPolling() }
-        .alert("Errore", isPresented: errorBinding) {
+        .alert("Error", isPresented: errorBinding) {
             Button("OK", role: .cancel) { chatVM.errorMessage = nil }
         } message: {
             Text(chatVM.errorMessage ?? "")

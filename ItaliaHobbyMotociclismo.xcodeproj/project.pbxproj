@@ -34,6 +34,7 @@
 		A024 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024 /* ProfileView.swift */; };
 		A025 /* ItaliaHobbyMotociclismo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B025 /* ItaliaHobbyMotociclismo.xcdatamodeld */; };
 		A026 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B026 /* Assets.xcassets */; };
+		A027 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = LOCGROUP /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,8 +64,14 @@
 		B024 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		B026 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B027 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		B028 /* ItaliaHobbyMotociclismo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ItaliaHobbyMotociclismo.xcdatamodel; sourceTree = "<group>"; };
 		TARGET_REF /* ItaliaHobbyMotociclismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItaliaHobbyMotociclismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+=======
+		ENSTRREF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ITSTRREF /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		TARGET_REF /* ItaliaHobbyMotociclismo */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItaliaHobbyMotociclismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+>>>>>>> 641bfee1b0f80f4162be43fd4d8a570987d88c1c
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +92,7 @@
 				B002 /* ContentView.swift */,
 				B026 /* Assets.xcassets */,
 				B027 /* Info.plist */,
+				LOCGROUP /* Localizable.strings */,
 				MODELSGROUP /* Models */,
 				NETWORKGROUP /* Networking */,
 				LOCALDBGROUP /* LocalDB */,
@@ -234,6 +242,18 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXVariantGroup section */
+		LOCGROUP /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ENSTRREF /* en */,
+				ITSTRREF /* it */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin PBXNativeTarget section */
 		NATIVE_TARGET /* ItaliaHobbyMotociclismo */ = {
 			isa = PBXNativeTarget;
@@ -269,7 +289,7 @@
 			};
 			buildConfigurationList = PROJCONFIGLIST /* Build configuration list for PBXProject "ItaliaHobbyMotociclismo" */;
 			compatibilityVersion = "Xcode 15.0";
-			developmentRegion = it;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -292,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A026 /* Assets.xcassets in Resources */,
+				A027 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

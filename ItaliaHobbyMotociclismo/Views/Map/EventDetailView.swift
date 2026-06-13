@@ -52,7 +52,7 @@ struct EventDetailView: View {
                                 .foregroundColor(.secondary)
 
                                 Label(
-                                    "\(event.participantCount) partecipanti",
+                                    String(format: String(localized: "%d participants"), event.participantCount),
                                     systemImage: "person.3"
                                 )
                                 .foregroundColor(.secondary)
@@ -72,7 +72,7 @@ struct EventDetailView: View {
                                     Button {
                                         showChat = true
                                     } label: {
-                                        Label("Apri Chat", systemImage: "bubble.left.and.bubble.right")
+                                        Label("Open Chat", systemImage: "bubble.left.and.bubble.right")
                                             .frame(maxWidth: .infinity)
                                     }
                                     .buttonStyle(.bordered)
@@ -83,14 +83,14 @@ struct EventDetailView: View {
                         }
                     }
                 } else {
-                    ContentUnavailableView("Evento non trovato", systemImage: "magnifyingglass")
+                    ContentUnavailableView("Event Not Found", systemImage: "magnifyingglass")
                 }
             }
-            .navigationTitle("Dettaglio Evento")
+            .navigationTitle("Event Details")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Chiudi") { dismiss() }
+                    Button("Close") { dismiss() }
                 }
             }
             .navigationDestination(isPresented: $showChat) {
@@ -108,7 +108,7 @@ struct EventDetailView: View {
             Button(role: .destructive) {
                 Task { await unsubscribe(event: event) }
             } label: {
-                Label("Cancella iscrizione", systemImage: "minus.circle")
+                Label("Unsubscribe", systemImage: "minus.circle")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.bordered)
@@ -117,7 +117,7 @@ struct EventDetailView: View {
             Button {
                 Task { await subscribe(event: event) }
             } label: {
-                Label("Iscriviti", systemImage: "plus.circle")
+                Label("Subscribe", systemImage: "plus.circle")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)

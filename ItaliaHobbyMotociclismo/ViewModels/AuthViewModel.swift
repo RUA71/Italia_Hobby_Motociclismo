@@ -69,10 +69,8 @@ final class AuthViewModel: ObservableObject {
             currentUser = user
             isRegistered = true
             // Inform the user that the remote registration failed.
-            errorMessage = NSLocalizedString(
-                "Registrazione salvata localmente. Sarà sincronizzata quando torni online.",
-                comment: "Offline registration notice"
-            )
+            errorMessage = String(localized: "Registration saved locally. It will be synced when you are back online.",
+                                  comment: "Offline registration notice")
         }
     }
 

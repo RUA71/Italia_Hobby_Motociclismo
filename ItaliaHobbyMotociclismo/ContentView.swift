@@ -8,7 +8,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if authVM.isLoading {
-                ProgressView("Caricamento…")
+                ProgressView("Loading…")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if !authVM.isRegistered {
                 RegistrationView()
@@ -42,7 +42,7 @@ struct MainTabView: View {
 
             SettingsMenuView(user: user)
                 .tabItem {
-                    Label("Setting", systemImage: "gearshape")
+                    Label("Settings", systemImage: "gearshape")
                 }
         }
         .onAppear {
@@ -72,7 +72,7 @@ struct MainTabView: View {
                         PrivacyView()
                     }
                 }
-                .navigationTitle("Setting")
+                .navigationTitle("Settings")
             }
         }
     }

@@ -13,31 +13,31 @@ struct ProfileView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Dati Personali") {
+                Section("Personal Data") {
                     if profileVM.isEditing {
                         TextField("Nickname", text: $profileVM.user.nickname)
-                        TextField("Nome", text: $profileVM.user.name)
-                        TextField("Cognome", text: $profileVM.user.surname)
-                        TextField("Città", text: $profileVM.user.city)
-                        TextField("Nazione", text: $profileVM.user.country)
+                        TextField("First Name", text: $profileVM.user.name)
+                        TextField("Last Name", text: $profileVM.user.surname)
+                        TextField("City", text: $profileVM.user.city)
+                        TextField("Country", text: $profileVM.user.country)
                     } else {
                         infoRow(label: "Nickname", value: profileVM.user.nickname)
-                        infoRow(label: "Nome", value: profileVM.user.name)
-                        infoRow(label: "Cognome", value: profileVM.user.surname)
-                        infoRow(label: "Città", value: profileVM.user.city)
-                        infoRow(label: "Nazione", value: profileVM.user.country)
+                        infoRow(label: "First Name", value: profileVM.user.name)
+                        infoRow(label: "Last Name", value: profileVM.user.surname)
+                        infoRow(label: "City", value: profileVM.user.city)
+                        infoRow(label: "Country", value: profileVM.user.country)
                     }
                 }
 
-                Section("La Tua Moto") {
+                Section("Your Motorcycle") {
                     if profileVM.isEditing {
-                        TextField("Marca", text: $profileVM.user.motorbikeBrand)
-                        TextField("Modello", text: $profileVM.user.motorbikeModel)
-                        TextField("Tipo", text: $profileVM.user.motorbikeType)
+                        TextField("Brand", text: $profileVM.user.motorbikeBrand)
+                        TextField("Model", text: $profileVM.user.motorbikeModel)
+                        TextField("Type", text: $profileVM.user.motorbikeType)
                     } else {
-                        infoRow(label: "Marca", value: profileVM.user.motorbikeBrand)
-                        infoRow(label: "Modello", value: profileVM.user.motorbikeModel)
-                        infoRow(label: "Tipo", value: profileVM.user.motorbikeType)
+                        infoRow(label: "Brand", value: profileVM.user.motorbikeBrand)
+                        infoRow(label: "Model", value: profileVM.user.motorbikeModel)
+                        infoRow(label: "Type", value: profileVM.user.motorbikeType)
                     }
                 }
 
@@ -49,23 +49,23 @@ struct ProfileView: View {
                     }
                 }
             }
-            .navigationTitle("Profilo")
+            .navigationTitle("Profile")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if profileVM.isEditing {
-                        Button("Salva") {
+                        Button("Save") {
                             Task { await profileVM.saveProfile() }
                         }
                         .disabled(profileVM.isSaving)
                     } else {
-                        Button("Modifica") {
+                        Button("Edit") {
                             profileVM.isEditing = true
                         }
                     }
                 }
                 if profileVM.isEditing {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        Button("Annulla") {
+                        Button("Cancel") {
                             profileVM.isEditing = false
                         }
                     }
@@ -73,19 +73,19 @@ struct ProfileView: View {
             }
             .overlay {
                 if profileVM.isSaving {
-                    ProgressView("Salvataggio…")
+                    ProgressView("Saving…")
                         .padding()
                         .background(.regularMaterial)
                         .cornerRadius(12)
                 }
             }
             .alert("Logout", isPresented: $showLogoutAlert) {
-                Button("Esci", role: .destructive) { authVM.logout() }
-                Button("Annulla", role: .cancel) {}
+                Button("Sign Out", role: .destructive) { authVM.logout() }
+                Button("Cancel", role: .cancel) {}
             } message: {
-                Text("Sei sicuro di voler uscire?")
+                Text("Are you sure you want to sign out?")
             }
-            .alert("Avviso", isPresented: profileErrorBinding) {
+            .alert("Warning", isPresented: profileErrorBinding) {
                 Button("OK", role: .cancel) { profileVM.errorMessage = nil }
             } message: {
                 Text(profileVM.errorMessage ?? "")

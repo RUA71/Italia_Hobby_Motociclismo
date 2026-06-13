@@ -1,0 +1,84 @@
+/* RegistrationView */
+"Personal Data" = "Personal Data";
+"Nickname *" = "Nickname *";
+"First Name" = "First Name";
+"Last Name" = "Last Name";
+"City *" = "City *";
+"Country *" = "Country *";
+"Motorcycle" = "Motorcycle";
+"Brand *" = "Brand *";
+"Model *" = "Model *";
+"Type" = "Type";
+"Sign Up" = "Sign Up";
+"Welcome!" = "Welcome!";
+
+/* Common */
+"Error" = "Error";
+"OK" = "OK";
+"Cancel" = "Cancel";
+
+/* ChatListView */
+"No Events" = "No Events";
+"Subscribe to an event to access the chat." = "Subscribe to an event to access the chat.";
+"Chat" = "Chat";
+
+/* ChatRoomView */
+"Write a message…" = "Write a message…";
+
+/* MapView */
+"Events Map" = "Events Map";
+
+/* EventDetailView */
+"%d participants" = "%d participants";
+"Open Chat" = "Open Chat";
+"Event Not Found" = "Event Not Found";
+"Event Details" = "Event Details";
+"Close" = "Close";
+"Unsubscribe" = "Unsubscribe";
+"Subscribe" = "Subscribe";
+
+/* ProfileView */
+"Personal Data" = "Personal Data";
+"Nickname" = "Nickname";
+"First Name" = "First Name";
+"Last Name" = "Last Name";
+"City" = "City";
+"Country" = "Country";
+"Your Motorcycle" = "Your Motorcycle";
+"Brand" = "Brand";
+"Model" = "Model";
+"Logout" = "Logout";
+"Profile" = "Profile";
+"Save" = "Save";
+"Edit" = "Edit";
+"Saving…" = "Saving…";
+"Sign Out" = "Sign Out";
+"Are you sure you want to sign out?" = "Are you sure you want to sign out?";
+"Warning" = "Warning";
+
+/* TripsView */
+"No Trips" = "No Trips";
+"You haven't joined any event yet." = "You haven't joined any event yet.";
+"Upcoming Trips" = "Upcoming Trips";
+"History" = "History";
+"My Trips" = "My Trips";
+
+/* ContentView */
+"Loading…" = "Loading…";
+"Events" = "Events";
+"Settings" = "Settings";
+"User Profile" = "User Profile";
+"Motorbikes" = "Motorbikes";
+"Privacy" = "Privacy";
+"Manage your privacy preferences and data visibility from this section." = "Manage your privacy preferences and data visibility from this section.";
+
+/* AuthViewModel */
+"Registration saved locally. It will be synced when you are back online." = "Registration saved locally. It will be synced when you are back online.";
+
+/* NetworkError */
+"The request URL is not valid." = "The request URL is not valid.";
+"No data received from the server." = "No data received from the server.";
+"Decoding error: %@" = "Decoding error: %@";
+"Server error (%lld): %@" = "Server error (%lld): %@";
+"Unauthorized access. Please log in." = "Unauthorized access. Please log in.";
+"unknown" = "unknown";
