@@ -1,37 +1,52 @@
 import SwiftUI
 
-/// Root view: shows registration if the user isn't registered yet, otherwise the main tab bar.
+/// Root view: shows a splash screen on launch, then registration or the main tab bar.
 struct ContentView: View {
     @EnvironmentObject var authVM: AuthViewModel
     @EnvironmentObject var eventsVM: EventsViewModel
 
+    /// Controls splash visibility; starts as `true` and is dismissed once
+    /// the remote fetch completes or 5 seconds have elapsed.
+    @State private var showSplash = true
+
     var body: some View {
         ZStack {
-            CrownBackground()
+            if showSplash {
+                SplashScreenView()
+                    .transition(.opacity)
+                    .zIndex(1)
+            } else {
+                ZStack {
+                    CrownBackground()
 
-            Group {
-                if authVM.isLoading {
-                    CrownPanel(alignment: .center, spacing: 12) {
-                        ProgressView()
-                            .tint(CrownTheme.crimson)
-                            .scaleEffect(1.2)
-                        Text("Preparing the realm…")
-                            .font(.system(.title3, design: .serif, weight: .bold))
-                            .foregroundStyle(CrownTheme.ink)
+                    Group {
+                        if !authVM.isRegistered {
+                            RegistrationView()
+                        } else if let user = authVM.currentUser {
+                            MainTabView(user: user)
+                        } else {
+                            RegistrationView()
+                        }
                     }
-                    .padding(.horizontal, 24)
-                } else if !authVM.isRegistered {
-                    RegistrationView()
-                } else if let user = authVM.currentUser {
-                    MainTabView(user: user)
-                } else {
-                    RegistrationView()
                 }
+                .transition(.opacity)
+                .zIndex(0)
             }
         }
-        .animation(.easeInOut, value: authVM.isRegistered)
+        .animation(.easeInOut(duration: 0.5), value: showSplash)
         .tint(CrownTheme.gold)
         .preferredColorScheme(.dark)
+        .task {
+            // Hard cap: dismiss the splash after 5 seconds at the latest.
+            try? await Task.sleep(for: .seconds(5))
+            showSplash = false
+        }
+        .onChange(of: authVM.isLoading) { _, isLoading in
+            // Dismiss as soon as the remote fetch completes.
+            if !isLoading {
+                showSplash = false
+            }
+        }
     }
 }
 

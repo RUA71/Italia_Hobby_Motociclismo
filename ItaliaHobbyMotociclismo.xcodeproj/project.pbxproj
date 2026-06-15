@@ -31,6 +31,7 @@
 		A022 /* ChatRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B022 /* ChatRoomView.swift */; };
 		A023 /* TripsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B023 /* TripsView.swift */; };
 		A024 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024 /* ProfileView.swift */; };
+		A029 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B029 /* SplashScreenView.swift */; };
 		A025 /* ItaliaHobbyMotociclismo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B025 /* ItaliaHobbyMotociclismo.xcdatamodeld */; };
 		A026 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B026 /* Assets.xcassets */; };
 		A027 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = LOCGROUP /* Localizable.strings */; };
@@ -63,6 +64,7 @@
 		B022 /* ChatRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomView.swift; sourceTree = "<group>"; };
 		B023 /* TripsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsView.swift; sourceTree = "<group>"; };
 		B024 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		B029 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		B026 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B027 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B028 /* ItaliaHobbyMotociclismo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ItaliaHobbyMotociclismo.xcdatamodel; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				CHATVIEWSGROUP /* Chat */,
 				TRIPSVIEWSGROUP /* Trips */,
 				PROFILEVIEWSGROUP /* Profile */,
+				B029 /* SplashScreenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				A022 /* ChatRoomView.swift in Sources */,
 				A023 /* TripsView.swift in Sources */,
 				A024 /* ProfileView.swift in Sources */,
+				A029 /* SplashScreenView.swift in Sources */,
 				A025 /* ItaliaHobbyMotociclismo.xcdatamodeld in Sources */,
 				A028 /* (null) in Sources */,
 			);
