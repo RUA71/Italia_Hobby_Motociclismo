@@ -37,23 +37,15 @@ struct ContentView: View {
         .tint(CrownTheme.gold)
         .preferredColorScheme(.dark)
         .task {
-            // Dismiss as soon as data arrives, but wait no longer than 5 seconds.
-            await withTaskGroup(of: Void.self) { group in
-                group.addTask {
-                    // Poll until loading is finished.
-                    while await authVM.isLoading {
-                        try? await Task.sleep(for: .milliseconds(50))
-                    }
-                }
-                group.addTask {
-                    // Hard cap of 5 seconds.
-                    try? await Task.sleep(for: .seconds(5))
-                }
-                // Whichever finishes first wins.
-                await group.next()
-                group.cancelAll()
-            }
+            // Hard cap: dismiss the splash after 5 seconds at the latest.
+            try? await Task.sleep(for: .seconds(5))
             showSplash = false
+        }
+        .onChange(of: authVM.isLoading) { _, isLoading in
+            // Dismiss as soon as the remote fetch completes.
+            if !isLoading {
+                showSplash = false
+            }
         }
     }
 }
