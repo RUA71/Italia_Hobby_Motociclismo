@@ -3,8 +3,6 @@ import MapKit
 
 /// Displays all club events on a map with annotations.
 struct MapView: View {
-    private let bottomLedgerInset: CGFloat = 120
-
     @EnvironmentObject var eventsVM: EventsViewModel
     @EnvironmentObject var authVM: AuthViewModel
 
@@ -13,32 +11,31 @@ struct MapView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                CrownBackground()
-
-                Map(position: $cameraPosition) {
-                    ForEach(eventsVM.events) { event in
-                        Annotation(event.title, coordinate: event.coordinate) {
-                            EventAnnotationView(event: event)
-                                .onTapGesture { selectedEvent = event }
-                        }
+            Map(position: $cameraPosition) {
+                ForEach(eventsVM.events) { event in
+                    Annotation(event.title, coordinate: event.coordinate) {
+                        EventAnnotationView(event: event)
+                            .onTapGesture { selectedEvent = event }
                     }
                 }
-                .mapStyle(.standard(elevation: .realistic))
-                .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 30, style: .continuous)
-                        .stroke(CrownTheme.gold.opacity(0.85), lineWidth: 2)
-                )
-                .padding(.horizontal, 16)
-                .padding(.top, 16)
-                .padding(.bottom, bottomLedgerInset)
-                .shadow(color: CrownTheme.shadow, radius: 18, y: 10)
-                .mapControls {
-                    MapUserLocationButton()
-                    MapCompass()
-                    MapScaleView()
+            }
+            .mapStyle(.standard(elevation: .realistic))
+            .mapControls {
+                MapUserLocationButton()
+                MapCompass()
+                MapScaleView()
+            }
+            .safeAreaInset(edge: .bottom) {
+                HStack {
+                    Label("\(eventsVM.events.count) Events", systemImage: "calendar")
+                    Spacer()
+                    Label("\(eventsVM.subscribedEvents.count) Joined", systemImage: "checkmark.circle")
                 }
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+                .background(.regularMaterial)
             }
             .navigationTitle("Events Map")
             .navigationBarTitleDisplayMode(.inline)
@@ -46,22 +43,8 @@ struct MapView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if eventsVM.isLoading {
                         ProgressView()
-                            .tint(CrownTheme.gold)
                     }
                 }
-            }
-            .safeAreaInset(edge: .bottom) {
-                CrownPanel(spacing: 10) {
-                    Text("Royal Route Ledger")
-                        .font(.system(.headline, design: .serif, weight: .bold))
-                        .foregroundStyle(CrownTheme.ink)
-                    HStack {
-                        labelPill(title: "Events", value: "\(eventsVM.events.count)", fill: CrownTheme.gold.opacity(0.28))
-                        labelPill(title: "Joined", value: "\(eventsVM.subscribedEvents.count)", fill: CrownTheme.emerald.opacity(0.25))
-                    }
-                }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 8)
             }
             .task { await eventsVM.loadEvents(userId: authVM.currentUser?.id) }
             .sheet(item: $selectedEvent) { event in
@@ -74,26 +57,7 @@ struct MapView: View {
             } message: {
                 Text(eventsVM.errorMessage ?? "")
             }
-            .crownNavigationChrome()
         }
-    }
-
-    private func labelPill(title: String, value: String, fill: Color) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(title.uppercased())
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(CrownTheme.ink.opacity(0.7))
-            Text(value)
-                .font(.system(.title3, design: .serif, weight: .bold))
-                .foregroundStyle(CrownTheme.ink)
-        }
-        .padding(.vertical, 10)
-        .padding(.horizontal, 14)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(fill)
-        )
     }
 
     private var errorBinding: Binding<Bool> {
@@ -109,24 +73,10 @@ private struct EventAnnotationView: View {
     let event: Event
 
     var body: some View {
-        VStack(spacing: 0) {
-            ZStack {
-                Circle()
-                    .fill(event.isSubscribed ? CrownTheme.emerald : CrownTheme.crimson)
-                    .frame(width: 40, height: 40)
-                Circle()
-                    .stroke(CrownTheme.gold, lineWidth: 2)
-                    .frame(width: 40, height: 40)
-                Image(systemName: event.isSubscribed ? "checkmark.shield.fill" : "crown.fill")
-                    .foregroundColor(CrownTheme.parchment)
-                    .font(.system(size: 18))
-            }
-            Image(systemName: "triangle.fill")
-                .foregroundColor(event.isSubscribed ? CrownTheme.emerald : CrownTheme.crimson)
-                .font(.system(size: 10))
-                .rotationEffect(.degrees(180))
-                .offset(y: -2)
-        }
+        Image(systemName: event.isSubscribed ? "checkmark.circle.fill" : "mappin.circle.fill")
+            .font(.title)
+            .foregroundStyle(event.isSubscribed ? .green : .red)
+            .background(Circle().fill(.white).padding(4))
     }
 }
 

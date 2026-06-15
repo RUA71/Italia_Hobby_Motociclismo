@@ -2,6 +2,9 @@
 
 Official iOS application for the **Italia Hobby Motociclismo** motorbike club.
 
+> **UI style:** The `main` branch uses a modern, Apple-standard SwiftUI interface.
+> The medieval-themed look and feel is preserved on the `medieval-style` branch.
+
 ## Overview
 
 A native **iOS app built with SwiftUI** that lets club members:

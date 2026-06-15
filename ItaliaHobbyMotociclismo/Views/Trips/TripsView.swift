@@ -18,48 +18,34 @@ struct TripsView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                CrownBackground()
-
-                Group {
-                    if eventsVM.subscribedEvents.isEmpty {
-                        ContentUnavailableView(
-                            "No Trips",
-                            systemImage: "road.lanes",
-                            description: Text("You haven't joined any event yet.")
-                        )
-                    } else {
-                        ScrollView {
-                            VStack(spacing: 18) {
-                                if !upcomingTrips.isEmpty {
-                                    tripSection(title: "Upcoming Trips", trips: upcomingTrips)
-                                }
-
-                                if !pastTrips.isEmpty {
-                                    tripSection(title: "History", trips: pastTrips)
+            Group {
+                if eventsVM.subscribedEvents.isEmpty {
+                    ContentUnavailableView(
+                        "No Trips",
+                        systemImage: "road.lanes",
+                        description: Text("You haven't joined any event yet.")
+                    )
+                } else {
+                    List {
+                        if !upcomingTrips.isEmpty {
+                            Section("Upcoming Trips") {
+                                ForEach(upcomingTrips) { event in
+                                    TripRowView(event: event)
                                 }
                             }
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 24)
+                        }
+                        if !pastTrips.isEmpty {
+                            Section("History") {
+                                ForEach(pastTrips) { event in
+                                    TripRowView(event: event)
+                                }
+                            }
                         }
                     }
                 }
             }
             .navigationTitle("My Trips")
             .task { await eventsVM.loadEvents() }
-            .crownNavigationChrome()
-        }
-    }
-
-    private func tripSection(title: String, trips: [Event]) -> some View {
-        CrownPanel {
-            CrownSectionHeader(title: title)
-            ForEach(Array(trips.enumerated()), id: \.element.id) { index, event in
-                if index > 0 {
-                    Divider().background(CrownTheme.gold.opacity(0.3))
-                }
-                TripRowView(event: event)
-            }
         }
     }
 }
@@ -71,18 +57,17 @@ private struct TripRowView: View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(event.title)
-                    .font(.system(.headline, design: .serif, weight: .bold))
-                    .foregroundStyle(CrownTheme.ink)
+                    .font(.headline)
                 Text(event.date.formatted(date: .long, time: .shortened))
                     .font(.caption)
-                    .foregroundStyle(CrownTheme.ink.opacity(0.72))
+                    .foregroundStyle(.secondary)
             }
             Spacer()
             Label("\(event.participantCount)", systemImage: "person.3")
                 .font(.caption)
-                .foregroundStyle(CrownTheme.bronze)
+                .foregroundStyle(.secondary)
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 2)
     }
 }
 

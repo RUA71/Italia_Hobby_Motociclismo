@@ -38,7 +38,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		65DF69852FDDA828004BFAAA /* CrownUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownUI.swift; sourceTree = "<group>"; };
 		B001 /* ItaliaHobbyMotociclismoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItaliaHobbyMotociclismoApp.swift; sourceTree = "<group>"; };
 		B002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B003 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -133,7 +132,6 @@
 			children = (
 				APPGROUP /* ItaliaHobbyMotociclismo */,
 				PRODUCTSGROUP /* Products */,
-				65DF69852FDDA828004BFAAA /* CrownUI.swift */,
 			);
 			sourceTree = "<group>";
 		};

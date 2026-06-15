@@ -24,63 +24,50 @@ struct EventDetailView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                CrownBackground()
-
-                Group {
-                    if let event {
-                        ScrollView {
-                            VStack(alignment: .leading, spacing: 18) {
-                                CrownPanel(spacing: 14) {
-                                    CrownSectionHeader(
-                                        title: event.title,
-                                        subtitle: "Gather your companions and ride under the club banner."
-                                    )
-
-                                    Map {
-                                        Annotation(event.title, coordinate: event.coordinate) {
-                                            Image(systemName: "crown.fill")
-                                                .font(.title2)
-                                                .foregroundColor(CrownTheme.crimson)
-                                        }
-                                    }
-                                    .frame(height: 210)
-                                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                            .stroke(CrownTheme.gold.opacity(0.8), lineWidth: 2)
-                                    )
-                                }
-
-                                CrownPanel {
-                                    detailRow(systemImage: "calendar", value: event.date.formatted(date: .long, time: .shortened))
-                                    detailRow(systemImage: "person.3", value: String(format: String(localized: "%d participants"), event.participantCount))
-
-                                    Divider().background(CrownTheme.gold.opacity(0.35))
-
-                                    Text(event.description)
-                                        .foregroundStyle(CrownTheme.ink)
-                                }
-
-                                CrownPanel {
-                                    subscribeButton(event: event)
-
-                                    if event.isSubscribed {
-                                        Button {
-                                            showChat = true
-                                        } label: {
-                                            Label("Open Chat", systemImage: "bubble.left.and.bubble.right")
-                                        }
-                                        .buttonStyle(CrownSecondaryButtonStyle())
-                                    }
+            Group {
+                if let event {
+                    List {
+                        Section {
+                            Map {
+                                Annotation(event.title, coordinate: event.coordinate) {
+                                    Image(systemName: "mappin.circle.fill")
+                                        .font(.title)
+                                        .foregroundStyle(.red)
                                 }
                             }
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 24)
+                            .frame(height: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .listRowInsets(.init(top: 8, leading: 8, bottom: 8, trailing: 8))
                         }
-                    } else {
-                        ContentUnavailableView("Event Not Found", systemImage: "magnifyingglass")
+
+                        Section("Details") {
+                            LabeledContent("Date", value: event.date.formatted(date: .long, time: .shortened))
+                            LabeledContent("Participants", value: "\(event.participantCount)")
+                        }
+
+                        Section("Description") {
+                            Text(event.description)
+                                .foregroundStyle(.secondary)
+                        }
+
+                        Section {
+                            subscribeButton(event: event)
+
+                            if event.isSubscribed {
+                                Button {
+                                    showChat = true
+                                } label: {
+                                    Label("Open Chat", systemImage: "bubble.left.and.bubble.right")
+                                        .frame(maxWidth: .infinity)
+                                }
+                                .buttonStyle(.bordered)
+                            }
+                        }
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(.init(top: 4, leading: 0, bottom: 4, trailing: 0))
                     }
+                } else {
+                    ContentUnavailableView("Event Not Found", systemImage: "magnifyingglass")
                 }
             }
             .navigationTitle("Event Details")
@@ -88,7 +75,6 @@ struct EventDetailView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close") { dismiss() }
-                        .foregroundStyle(CrownTheme.gold)
                 }
             }
             .navigationDestination(isPresented: $showChat) {
@@ -97,17 +83,6 @@ struct EventDetailView: View {
                         .environmentObject(authVM)
                 }
             }
-            .crownNavigationChrome()
-        }
-    }
-
-    private func detailRow(systemImage: String, value: String) -> some View {
-        Label {
-            Text(value)
-                .foregroundStyle(CrownTheme.ink)
-        } icon: {
-            Image(systemName: systemImage)
-                .foregroundStyle(CrownTheme.crimson)
         }
     }
 
@@ -117,16 +92,19 @@ struct EventDetailView: View {
             Button(role: .destructive) {
                 Task { await unsubscribe(event: event) }
             } label: {
-                Label("Withdraw from Ride", systemImage: "minus.circle")
+                Label("Leave Event", systemImage: "minus.circle")
+                    .frame(maxWidth: .infinity)
             }
-            .buttonStyle(CrownSecondaryButtonStyle(foreground: CrownTheme.parchment, background: CrownTheme.crimson))
+            .buttonStyle(.borderedProminent)
+            .tint(.red)
         } else {
             Button {
                 Task { await subscribe(event: event) }
             } label: {
-                Label("Join the Ride", systemImage: "plus.circle")
+                Label("Join Event", systemImage: "plus.circle")
+                    .frame(maxWidth: .infinity)
             }
-            .buttonStyle(CrownPrimaryButtonStyle())
+            .buttonStyle(.borderedProminent)
         }
     }
 
